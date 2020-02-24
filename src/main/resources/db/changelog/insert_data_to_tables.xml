@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="muradtcen" id="insert_authors">
+        <sqlFile path="/db/sql/insert_authors.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE authors;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="insert_categories">
+        <sqlFile path="/db/sql/insert_categories.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE categories;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="insert_works">
+        <sqlFile path="/db/sql/insert_works.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE works;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="insert_categories_works">
+        <sqlFile path="/db/sql/insert_categories_works.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE categories_works;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

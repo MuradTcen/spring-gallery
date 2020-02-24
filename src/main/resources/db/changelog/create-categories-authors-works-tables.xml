@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="muradtcen" id="create_table_categories">
+        <sql>
+            CREATE TABLE categories (
+                id INT NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                sort INT NOT NULL,
+                active BOOLEAN NOT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+                PRIMARY KEY(id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE categories;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_works">
+        <sql>
+            CREATE TABLE works (
+                id INT NOT NULL,
+                author_id INT NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                description TEXT DEFAULT NULL,
+                image_path VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+                PRIMARY KEY(id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE works;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_categories_works">
+        <sql>
+            CREATE TABLE categories_works (
+                work_id INT NOT NULL,
+                category_id INT NOT NULL,
+                PRIMARY KEY(work_id, category_id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE categories_works');
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_authors">
+        <sql>
+            CREATE TABLE authors (
+                id INT NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                article TEXT DEFAULT NULL,
+                photo_path VARCHAR(255) DEFAULT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+                PRIMARY KEY(id))
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE authors');
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

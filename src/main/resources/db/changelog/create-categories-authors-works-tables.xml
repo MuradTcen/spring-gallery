@@ -9,7 +9,7 @@
     <changeSet author="muradtcen" id="create_table_categories">
         <sql>
             CREATE TABLE categories (
-                id INT NOT NULL,
+                id SERIAL,
                 name VARCHAR(255) NOT NULL,
                 sort INT NOT NULL,
                 active BOOLEAN NOT NULL,
@@ -27,7 +27,7 @@
     <changeSet author="muradtcen" id="create_table_works">
         <sql>
             CREATE TABLE works (
-                id INT NOT NULL,
+                id SERIAL,
                 author_id INT NOT NULL,
                 name VARCHAR(255) NOT NULL,
                 description TEXT DEFAULT NULL,
@@ -60,7 +60,7 @@
     <changeSet author="muradtcen" id="create_table_authors">
         <sql>
             CREATE TABLE authors (
-                id INT NOT NULL,
+                id SERIAL,
                 name VARCHAR(255) NOT NULL,
                 article TEXT DEFAULT NULL,
                 photo_path VARCHAR(255) DEFAULT NULL,

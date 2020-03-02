@@ -52,7 +52,7 @@
         </sql>
         <rollback>
             <sql>
-                DROP TABLE categories_works');
+                DROP TABLE categories_works;
             </sql>
         </rollback>
     </changeSet>
@@ -70,7 +70,51 @@
         </sql>
         <rollback>
             <sql>
-                DROP TABLE authors');
+                DROP TABLE authors;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_files">
+        <sql>
+            CREATE TABLE files (
+            id SERIAL,
+            path VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+            updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+            PRIMARY KEY(id))
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE files;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_author_file">
+        <sql>
+            CREATE TABLE file_author (
+                author_id INT NOT NULL REFERENCES authors (id),
+                file_id INT NOT NULL REFERENCES files (id),
+                PRIMARY KEY(author_id, file_id))
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE author_file;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_file_work">
+        <sql>
+            CREATE TABLE file_work (
+                work_id INT NOT NULL REFERENCES works (id),
+                file_id INT NOT NULL REFERENCES files (id),
+                PRIMARY KEY(work_id, file_id))
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE file_work;
             </sql>
         </rollback>
     </changeSet>

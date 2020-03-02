@@ -20,9 +20,6 @@ public class File {
     @Column
     private String path;
 
-    @Column
-    private String name;
-
     @Column(nullable = false, updatable = false)
     @CreatedDate
     private Date createdAt;

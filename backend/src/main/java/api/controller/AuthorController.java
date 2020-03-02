@@ -1,24 +1,17 @@
 package api.controller;
 
 import api.entity.Author;
-import api.entity.File;
 import api.repository.AuthorRepository;
-import api.repository.FileRepository;
 import api.service.AuthorService;
-import api.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +19,6 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
-    private final FileRepository fileRepository;
-    private final ImageService imageService;
 
     @GetMapping(value = "/api/author")
     public Page<Author> read(Pageable pageRequest) {
@@ -66,16 +57,5 @@ public class AuthorController {
     @DeleteMapping("/api/author/{id}")
     void deleteAuthor(@PathVariable Long id) {
         authorRepository.deleteById(id);
-    }
-
-    @GetMapping(value = "/api/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> getImage(@PathVariable Long id) throws IOException {
-        File file = fileRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "File Not Found"));
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(imageService.getImage(file.getPath()));
     }
 }

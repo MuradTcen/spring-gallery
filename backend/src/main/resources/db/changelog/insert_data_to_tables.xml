@@ -41,4 +41,31 @@
             </sql>
         </rollback>
     </changeSet>
+
+    <changeSet author="muradtcen" id="insert_files">
+        <sqlFile path="/db/sql/insert_files.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE files;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="insert_file_author">
+        <sqlFile path="/db/sql/insert_file_author.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE file_author;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="insert_file_work">
+        <sqlFile path="/db/sql/insert_file_work.sql"></sqlFile>
+        <rollback>
+            <sql>
+                TRUNCATE file_work;
+            </sql>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

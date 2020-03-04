@@ -94,8 +94,8 @@
     <changeSet author="muradtcen" id="create_table_author_file">
         <sql>
             CREATE TABLE file_author (
-                author_id INT NOT NULL REFERENCES authors (id),
-                file_id INT NOT NULL REFERENCES files (id),
+                author_id INT NOT NULL REFERENCES authors (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                file_id INT NOT NULL REFERENCES files (id) ON UPDATE CASCADE ON DELETE CASCADE,
                 PRIMARY KEY(author_id, file_id))
         </sql>
         <rollback>
@@ -108,8 +108,8 @@
     <changeSet author="muradtcen" id="create_table_file_work">
         <sql>
             CREATE TABLE file_work (
-                work_id INT NOT NULL REFERENCES works (id),
-                file_id INT NOT NULL REFERENCES files (id),
+                work_id INT NOT NULL REFERENCES works (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                file_id INT NOT NULL REFERENCES files (id) ON UPDATE CASCADE ON DELETE CASCADE,
                 PRIMARY KEY(work_id, file_id))
         </sql>
         <rollback>

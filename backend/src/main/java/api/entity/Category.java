@@ -1,41 +1,38 @@
 package api.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Entity(name = "categories")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Category {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column
+    @NotBlank(message = "Category name must not be blank!")
     private String name;
 
     @Column
-    @Null
     private int sort;
 
-    @Column
+    @Column(name = "active")
     private boolean isActive;
 
-    @Column
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "categories_works",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "work_id")
-    )
-    private List<Work> works;
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    private LocalDate createdAt;
 
     @Column
-    private int createdAt;
-
-    @Column
-    private int updatedAt;
+    @LastModifiedDate
+    private LocalDate updatedAt;
 }

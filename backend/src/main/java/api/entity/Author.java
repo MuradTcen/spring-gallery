@@ -1,6 +1,5 @@
 package api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -31,10 +30,13 @@ public class Author {
     @Column
     private String photoPath;
 
-    @Column
-    @JsonIgnore
-    @OneToMany(mappedBy = "author")
-    private Set<Work> works;
+    @ManyToMany
+    @JoinTable(
+            name = "file_author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id"))
+    Set<File> files;
+
 
     @Column(nullable = false, updatable = false)
     @CreatedDate

@@ -5,7 +5,7 @@ import api.entity.Work;
 import api.repository.AuthorRepository;
 import api.repository.WorkRepository;
 import api.service.WorkService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@RequiredArgsConstructor
 public class WorkServiceImpl implements WorkService {
-    @Autowired
-    private WorkRepository workRepository;
+    private final WorkRepository workRepository;
 
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
     @Override
     public Page<Work> getAll(Pageable pageable) {

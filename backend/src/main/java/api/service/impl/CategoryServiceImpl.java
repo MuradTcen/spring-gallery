@@ -4,13 +4,13 @@ import api.dto.CategoryDTO;
 import api.entity.Category;
 import api.repository.CategoryRepository;
 import api.service.CategoryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 

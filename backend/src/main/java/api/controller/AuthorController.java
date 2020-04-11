@@ -15,24 +15,25 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class AuthorController {
 
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
 
-    @GetMapping(value = "/api/author")
+    @GetMapping(value = "/author")
     public Page<Author> read(Pageable pageRequest) {
         return authorService.getAll(pageRequest);
     }
 
-    @GetMapping(value = "/api/author/{id}")
+    @GetMapping(value = "/author/{id}")
     public Author one(@PathVariable Long id, HttpServletResponse response) {
         return authorRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Author Not Found"));
     }
 
-    @PutMapping(value = "/api/author/{id}")
+    @PutMapping(value = "/author/{id}")
     Author update(@RequestBody Author newAuthor, @PathVariable Long id) {
 
         return authorRepository.findById(id)
@@ -49,12 +50,12 @@ public class AuthorController {
                         HttpStatus.NOT_FOUND, "Author Not Found"));
     }
 
-    @PostMapping("/api/author")
+    @PostMapping("/author")
     Author newAuthor(@Valid @RequestBody Author newAuthor) {
         return authorRepository.save(newAuthor);
     }
 
-    @DeleteMapping("/api/author/{id}")
+    @DeleteMapping("/author/{id}")
     void deleteAuthor(@PathVariable Long id) {
         authorRepository.deleteById(id);
     }

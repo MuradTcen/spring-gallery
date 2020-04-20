@@ -6,7 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity(name = "files")
 @Data
@@ -22,10 +22,10 @@ public class File {
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Column
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
 }

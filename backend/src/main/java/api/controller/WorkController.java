@@ -5,6 +5,7 @@ import api.entity.Work;
 import api.repository.WorkRepository;
 import api.service.WorkService;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
+@Log
 public class WorkController {
     private final WorkService workService;
     private final WorkRepository workRepository;

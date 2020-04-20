@@ -3,6 +3,7 @@ package api.controller;
 import api.response.UploadFileResponse;
 import api.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Log
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity(name = "works")
@@ -45,10 +45,10 @@ public class Work {
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Column
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
 }

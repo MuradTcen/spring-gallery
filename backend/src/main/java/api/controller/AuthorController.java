@@ -4,6 +4,7 @@ import api.entity.Author;
 import api.repository.AuthorRepository;
 import api.service.AuthorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Log
 public class AuthorController {
 
     private final AuthorService authorService;

@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="spring-gallery"
+           targetNamespace="spring-gallery" elementFormDefault="qualified">
+
+    <xs:element name="getAuthorRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAuthorResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="authorInfo" type="tns:authorInfo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="authorInfo">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="article" type="xs:string"/>
+            <xs:element name="photoPath" type="xs:string"/>
+            <xs:element name="createdAt" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

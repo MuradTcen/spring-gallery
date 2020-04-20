@@ -1,0 +1,99 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE")
+        classpath "org.liquibase:liquibase-gradle-plugin:2.0.2"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.liquibase.gradle'
+
+//todo: навести порядок в организации файла
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "src/main/resources/schema/authors.xsd"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
+                    debugLevel: "lines,vars,source", includeantruntime: false,
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    jaxb
+}
+
+bootJar {
+    baseName = 'spring-gallery'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.4.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
+    compile group: 'org.hibernate', name: 'hibernate-envers', version: '5.4.12.Final'
+
+    compile group: 'org.hibernate', name: 'hibernate-tools', version: '5.4.12.Final'
+
+
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
+    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.8.6'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.2'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'wsdl4j:wsdl4j:1.6.1'
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+

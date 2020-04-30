@@ -2,23 +2,16 @@ package api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity(name = "works")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Work {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Work extends BaseEntity{
 
     @Column
     @NotBlank(message = "Work's name must not be blank!")
@@ -42,13 +35,5 @@ public class Work {
             joinColumns = @JoinColumn(name = "work_id"),
             inverseJoinColumns = @JoinColumn(name = "file_id"))
     Set<File> files;
-
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private LocalDate createdAt;
-
-    @Column
-    @LastModifiedDate
-    private LocalDate updatedAt;
 
 }

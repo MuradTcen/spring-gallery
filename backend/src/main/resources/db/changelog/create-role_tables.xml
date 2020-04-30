@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="muradtcen" id="create_table_users">
+        <sql>
+            CREATE TABLE users (
+                id SERIAL,
+                username VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+                PRIMARY KEY(id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE users;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_roles">
+        <sql>
+            CREATE TABLE roles (
+                id SERIAL,
+                name VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
+                PRIMARY KEY(id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE roles;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="muradtcen" id="create_table_user_role">
+        <sql>
+            CREATE TABLE user_role (
+                user_id INT NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                role_id INT NOT NULL REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                PRIMARY KEY(user_id, role_id));
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE user_role;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
